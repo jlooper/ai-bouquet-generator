@@ -1,7 +1,11 @@
 import axios from "axios";
 
-import { CLOUDINARY_API_URL } from "astro:env/client";
-import { CLOUDINARY_PRESET } from "astro:env/client";
+import { CLOUDINARY_PRESET, PUBLIC_CLOUDINARY_CLOUD_NAME } from "astro:env/client";
+
+function cloudinaryUploadUrl(cloudName) {
+  const name = String(cloudName || "").trim();
+  return `https://api.cloudinary.com/v1_1/${encodeURIComponent(name)}/image/upload`;
+}
 
 export const uploadToCloudinary = async (imageBase64) => {
   try {
@@ -9,11 +13,14 @@ export const uploadToCloudinary = async (imageBase64) => {
     formData.append("file", imageBase64);
     formData.append("upload_preset", CLOUDINARY_PRESET);
 
-    const response = await axios.post(CLOUDINARY_API_URL, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await axios.post(
+      cloudinaryUploadUrl(PUBLIC_CLOUDINARY_CLOUD_NAME),
+      formData,
+      {
+        /* Let the browser set multipart boundary; a bare "multipart/form-data" breaks uploads */
+        headers: {},
+      }
+    );
 
     return response.data.secure_url; // Return the uploaded image URL
   } catch (error) {

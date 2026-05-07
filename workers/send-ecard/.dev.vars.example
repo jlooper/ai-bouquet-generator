@@ -1,0 +1,16 @@
+# Copy this file to `.dev.vars` in this folder (same directory as wrangler.toml).
+# Wrangler loads `.dev.vars` when you run `npm run dev` here — it does NOT use
+# `wrangler secret put` values for local dev.
+#
+#   cp .dev.vars.example .dev.vars
+#
+# Rules (if Resend says "API key is invalid", check these):
+# - One line: RESEND_API_KEY=re_xxxxxxxx  (no spaces around =)
+# - No double quotes around the value unless you really want them stripped
+# - Do not put a comment on the same line as the key
+# - Paste ONLY the key from https://resend.com/api-keys — not "Bearer re_..."
+#
+# Test the key without running the Worker:
+#   npm run verify-resend
+
+RESEND_API_KEY=re_paste_your_key_here

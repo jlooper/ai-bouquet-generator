@@ -1,0 +1,13 @@
+name = "tussie-mussie-send-ecard"
+main = "src/index.ts"
+compatibility_date = "2024-11-01"
+
+# Public vars (safe in repo). Override FROM_EMAIL in the dashboard for production.
+[vars]
+FROM_EMAIL = "Tussie Mussie <onboarding@resend.dev>"
+# Comma-separated browser origins (exact match, no trailing slash). Add every
+# URL you use in production (apex + www, Netlify previews, custom domain).
+ALLOWED_ORIGINS = "http://localhost:4321,http://127.0.0.1:4321,https://tussie-mussies.netlify.app"
+
+# Set the secret in Cloudflare (never commit):
+#   npx wrangler secret put RESEND_API_KEY

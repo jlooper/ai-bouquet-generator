@@ -1,0 +1,16 @@
+<template>
+  <div
+    class="flex items-center justify-center gap-3 w-full max-w-xs mx-auto"
+    aria-hidden="true"
+  >
+    <span
+      class="h-px flex-1 max-w-[4.75rem] bg-gradient-to-r from-transparent via-brand-mauve/40 to-brand-blossom/45"
+    />
+    <span
+      class="font-display text-brand-blossom/65 text-[1.375rem] leading-none select-none drop-shadow-[0_0_16px_rgb(242_133_188_/_0.25)]"
+    >❧</span>
+    <span
+      class="h-px flex-1 max-w-[4.75rem] bg-gradient-to-l from-transparent via-brand-mauve/40 to-brand-blossom/45"
+    />
+  </div>
+</template>

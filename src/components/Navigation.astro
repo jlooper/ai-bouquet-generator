@@ -1,27 +1,32 @@
 ---
-const pathname = Astro.url.pathname;
 import logo from "../assets/logo.png?url";
 ---
 
-<nav class="shadow-lg">
+<nav>
   <div class="container mx-auto px-4">
-    <div class="flex justify-between items-center h-16">
-      <!-- Left: Logo -->
-      <div class="flex">
-        <a href="/">
+    <div class="flex justify-between items-center h-16 md:h-[4.25rem]">
+      <div class="flex items-center gap-3">
+        <a href="/" class="flex items-center gap-2 group" aria-label="Tussie Mussie — home">
           <img
             src={logo}
-            alt="Tussie Mussie Creator"
-            class="p-2 h-14 w-12 cursor-pointer"
+            alt=""
+            aria-hidden="true"
+            width="44"
+            height="52"
+            class="p-1 h-12 w-auto opacity-95 group-hover:opacity-100 transition-opacity"
           />
+          <span
+            class="hidden sm:block font-display text-lg text-white/95 tracking-wide italic font-medium drop-shadow-sm"
+          >
+            Tussie Mussie Generator
+          </span>
         </a>
       </div>
 
-      <!-- Right: Navigation Links -->
-      <div class="flex space-x-6 items-center">
+      <div class="flex gap-5 md:gap-8 items-center text-sm md:text-[0.9375rem] tracking-wide">
         <a
           href="/about"
-          class="text-white p-4 hover:underline transition-colors duration-200 font-medium"
+          class="text-brand-blush/95 hover:text-white transition-colors font-medium py-2 border-b border-transparent hover:border-brand-sky/70"
         >
           About
         </a>
@@ -29,7 +34,7 @@ import logo from "../assets/logo.png?url";
           href="https://github.com/jlooper/TussieMussi.es"
           target="_blank"
           rel="noopener noreferrer"
-          class="text-white hover:text-gray-300 transition-colors duration-200"
+          class="text-brand-blush/85 hover:text-white transition-colors p-2 -m-2 rounded-md hover:bg-white/10"
           aria-label="GitHub Repository"
         >
           <svg

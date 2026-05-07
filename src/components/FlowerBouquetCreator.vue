@@ -1,55 +1,70 @@
 <template>
-  <div class="flex flex-col lg:flex-row gap-8">
-    <div class="lg:w-2/3">
-      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-        <div class="flex border-b border-gray-200 mb-6">
+  <div class="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start">
+    <div class="lg:w-2/3 w-full">
+      <div class="romance-card rounded-2xl p-6 md:p-8 mb-6">
+        <div
+          class="flex gap-1 p-1 mb-8 rounded-xl bg-brand-wine/5 border border-brand-blush/45 w-full sm:w-fit"
+          role="tablist"
+        >
           <button
-            class="py-2 px-4 font-medium text-sm"
+            type="button"
+            role="tab"
+            class="flex-1 sm:flex-none py-2.5 px-5 rounded-lg text-sm font-medium transition-all duration-300"
             :class="{
-              'text-purple-600 border-b-2 border-purple-600': activeTab === 'manual',
-              'text-gray-500 hover:text-gray-700': activeTab !== 'manual',
+              'bg-white text-brand-wine shadow-sm ring-1 ring-brand-blush/50': activeTab === 'manual',
+              'text-brand-forest/50 hover:text-brand-wine/90': activeTab !== 'manual',
             }"
             @click="activeTab = 'manual'"
           >
-            Manual Selection
+            Choose stems
           </button>
           <button
-            class="py-2 px-4 font-medium text-sm"
+            type="button"
+            role="tab"
+            class="flex-1 sm:flex-none py-2.5 px-5 rounded-lg text-sm font-medium transition-all duration-300"
             :class="{
-              'text-purple-600 border-b-2 border-purple-600': activeTab === 'meaning',
-              'text-gray-500 hover:text-gray-700': activeTab !== 'meaning',
+              'bg-white text-brand-wine shadow-sm ring-1 ring-brand-blush/50': activeTab === 'meaning',
+              'text-brand-forest/50 hover:text-brand-wine/90': activeTab !== 'meaning',
             }"
             @click="activeTab = 'meaning'"
           >
-            Create by Meaning
+            By heartfelt meaning
           </button>
         </div>
 
         <div v-if="activeTab === 'manual'">
-          <h2 class="text-2xl font-semibold text-purple-800 mb-4">Select Flowers</h2>
+          <h2 class="font-display text-2xl md:text-3xl font-semibold text-brand-wine mb-2">
+            Choose each bloom
+          </h2>
+          <p class="text-brand-forest/70 text-sm mb-6 font-light">
+            Wander the garden of meanings—search by flower or by the feeling you wish to name.
+          </p>
 
           <div class="flex flex-col sm:flex-row gap-4 mb-6">
             <div class="flex-1">
               <input
                 type="text"
-                :placeholder="`Search by ${filterBy}...`"
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                :placeholder="`Search by ${filterBy}…`"
+                class="w-full px-4 py-2.5 rounded-xl border border-brand-blush/65 bg-white/85 text-brand-forest/85 placeholder:text-brand-forest/45 focus:outline-none focus:ring-2 focus:ring-brand-blossom/35 focus:border-brand-blush transition-shadow"
                 v-model="searchTerm"
               />
             </div>
-            <div class="sm:w-48">
+            <div class="sm:w-52">
               <select
-                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                class="w-full px-4 py-2.5 rounded-xl border border-brand-blush/65 bg-white/85 text-brand-forest/85 focus:outline-none focus:ring-2 focus:ring-brand-blossom/35 focus:border-brand-blush"
                 v-model="filterBy"
               >
-                <option value="name">Filter by Name</option>
-                <option value="meaning">Filter by Meaning</option>
+                <option value="name">By flower name</option>
+                <option value="meaning">By symbolism</option>
               </select>
             </div>
           </div>
 
           <div v-if="isLoading" class="flex justify-center items-center h-64">
-            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500"></div>
+            <div
+              class="animate-spin rounded-full h-11 w-11 border-2 border-brand-blush border-t-brand-wine"
+              aria-hidden="true"
+            ></div>
           </div>
           <div v-else>
             <div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
@@ -63,30 +78,34 @@
             </div>
             
             <!-- Pagination Controls -->
-            <div class="flex justify-center items-center gap-2 mt-4">
+            <div class="flex justify-center items-center gap-3 mt-6 flex-wrap">
               <button
+                type="button"
                 @click="currentPage--"
                 :disabled="currentPage === 1"
-                class="px-3 py-1 rounded-md text-sm font-medium transition-colors duration-200"
+                class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"
                 :class="{
-                  'bg-gray-200 text-gray-500 cursor-not-allowed': currentPage === 1,
-                  'bg-purple-600 text-white hover:bg-purple-700': currentPage > 1,
+                  'bg-brand-blush/25 text-brand-forest/35 cursor-not-allowed': currentPage === 1,
+                  'bg-brand-wine text-white hover:bg-brand-mauve shadow-md shadow-brand-wine/20': currentPage > 1,
                 }"
               >
                 Previous
               </button>
-              
-              <span class="text-sm text-gray-600">
+
+              <span class="text-sm text-brand-forest/55 tabular-nums">
                 Page {{ currentPage }} of {{ totalPages }}
               </span>
-              
+
               <button
+                type="button"
                 @click="currentPage++"
                 :disabled="currentPage === totalPages"
-                class="px-3 py-1 rounded-md text-sm font-medium transition-colors duration-200"
+                class="px-4 py-2 rounded-full text-sm font-medium transition-all duration-200"
                 :class="{
-                  'bg-gray-200 text-gray-500 cursor-not-allowed': currentPage === totalPages,
-                  'bg-purple-600 text-white hover:bg-purple-700': currentPage < totalPages,
+                  'bg-brand-blush/25 text-brand-forest/35 cursor-not-allowed':
+                    currentPage === totalPages,
+                  'bg-brand-wine text-white hover:bg-brand-mauve shadow-md shadow-brand-wine/20':
+                    currentPage < totalPages,
                 }"
               >
                 Next

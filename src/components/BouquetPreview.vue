@@ -1,13 +1,19 @@
 <template>
-  <div class="bg-white rounded-lg shadow-md p-6 top-6">
-    <h2 class="text-2xl font-semibold text-purple-800 mb-4">Your Tussie Mussie</h2>
+  <div
+    class="romance-card rounded-2xl p-6 md:p-7 top-6 lg:sticky lg:top-24"
+  >
+    <p class="font-display italic text-brand-mauve/95 text-base mb-1">Your bouquet</p>
+    <h2 class="font-display text-2xl md:text-3xl font-semibold text-brand-wine mb-1">
+      Tussie mussie
+    </h2>
+    <OrnamentRule class="mb-5" />
 
     <!-- Notification -->
     <div
       v-if="notification.message"
       :class="[
-      notificationClass,
-      'fixed top-4 left-1/2 transform -translate-x-1/2 z-50 p-4 rounded-md shadow-lg'
+        notificationClass,
+        'fixed top-4 left-1/2 -translate-x-1/2 z-50 px-5 py-3 rounded-xl shadow-xl max-w-[min(90vw,24rem)] text-center text-sm border',
       ]"
     >
       {{ notification.message }}
@@ -15,31 +21,33 @@
 
     <div v-if="totalFlowers > 0">
 
-      <div class="mb-4">
-        <h3 class="font-medium text-gray-700 mb-2">
-          Selected Flowers ({{ totalFlowers }})
+      <div class="mb-5">
+        <h3 class="text-xs font-semibold uppercase tracking-[0.2em] text-brand-mauve/75 mb-3">
+          In your arrangement · {{ totalFlowers }}
         </h3>
-        <div class="space-y-2 max-h-60 overflow-y-auto pr-2">
+        <div class="space-y-2 max-h-60 overflow-y-auto pr-1">
           <div
             v-for="flower in selectedFlowers"
             :key="flower.id"
-            class="flex items-center justify-between bg-gray-50 p-2 rounded-md"
+            class="flex items-center justify-between gap-2 bg-brand-blush/25 p-2.5 rounded-xl border border-brand-blush/45"
           >
-            <div class="flex items-center">
-              <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
+            <div class="flex items-center min-w-0">
+              <div class="w-9 h-9 rounded-full overflow-hidden mr-2.5 ring-2 ring-white shadow-sm shrink-0">
                 <img
                   :src="`https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/flowers/${flower.image}`"
                   :alt="flower.name"
                   class="w-full h-full object-cover"
                 />
               </div>
-              <span class="text-sm">{{ flower.name }}</span>
+              <span class="text-sm text-brand-forest/90 font-medium truncate">{{ flower.name }}</span>
             </div>
             <button
+              type="button"
               @click="onRemoveFlower(flower.id)"
-              class="text-red-500 hover:text-red-700"
+              class="shrink-0 text-brand-blossom hover:text-brand-wine text-xs font-medium px-2 py-1 rounded-lg hover:bg-brand-blush/35 transition-colors"
+              aria-label="Remove from bouquet"
             >
-              ✕
+              Remove
             </button>
           </div>
         </div>
@@ -47,124 +55,150 @@
 
       <div class="mb-6">
         <div class="flex items-center justify-between mb-2">
-          <h3 class="font-medium text-gray-700">Bouquet Meaning</h3>
+          <h3 class="text-sm font-medium text-brand-forest/80">The message in your flowers</h3>
           <button
+            type="button"
             @click="showMeanings = !showMeanings"
-            class="text-sm text-purple-600 hover:text-purple-800"
+            class="text-sm text-brand-mauve hover:text-brand-wine underline decoration-brand-blossom/50 underline-offset-2"
           >
-            {{ showMeanings ? "Hide" : "Show" }}
+            {{ showMeanings ? "Hide" : "Reveal" }}
           </button>
         </div>
-        <div v-if="showMeanings" class="bg-gray-50 p-3 rounded-md text-sm text-gray-700">
+        <div
+          v-if="showMeanings"
+          class="bg-gradient-to-br from-brand-sky/25 to-brand-blush/30 p-4 rounded-xl text-sm text-brand-forest/82 leading-relaxed border border-brand-sky/35 italic"
+        >
           {{ combinedMeaning }}
         </div>
       </div>
 
       <div v-if="!imageUrl" class="flex gap-2 mb-4">
         <button
+          type="button"
           @click="onClearBouquet"
-          class="flex-1 py-2 px-4 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-200"
+          class="flex-1 py-2.5 px-4 rounded-xl bg-brand-blush/20 text-brand-forest/85 hover:bg-brand-blush/35 border border-brand-blush/40 transition-colors text-sm font-medium"
         >
-          Clear
+          Begin again
         </button>
         <button
+          type="button"
           @click="handleGenerateImage"
           :disabled="isGenerating"
-          class="flex-1 py-2 px-4 text-white rounded-md transition-colors duration-200"
+          class="flex-1 py-2.5 px-4 text-white rounded-xl transition-all text-sm font-medium border border-brand-wine/25"
           :class="{
-            'bg-purple-400 cursor-not-allowed': isGenerating,
-            'bg-purple-600 hover:bg-purple-700': !isGenerating,
+            'bg-brand-blush/40 text-brand-forest/45 cursor-not-allowed border-transparent': isGenerating,
+            'bg-gradient-to-br from-brand-wine to-brand-mauve hover:shadow-lg shadow-md shadow-brand-wine/20':
+              !isGenerating,
           }"
         >
-          {{ isGenerating ? "Generating..." : "Generate Image" }}
+          {{ isGenerating ? "Composing your bouquet…" : "Compose my bouquet" }}
         </button>
       </div>
 
       <div v-else class="mb-6">
-        <div class="border rounded-lg overflow-hidden mb-4">
-          <img :src="imageUrl" alt="a tussie mussie just for you" class="w-full h-auto" />
+        <div
+          class="rounded-xl overflow-hidden mb-4 ring-1 ring-brand-blush/50 shadow-inner bg-brand-blush/15"
+        >
+          <img
+            :src="imageUrl"
+            alt="your tussie mussie"
+            class="w-full h-auto"
+          />
         </div>
         <div class="flex gap-2">
           <button
+            type="button"
             @click="resetImage"
-            class="flex-1 py-2 px-4 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-200"
+            class="flex-1 py-2.5 px-4 rounded-xl bg-brand-blush/20 text-brand-forest/85 hover:bg-brand-blush/35 border border-brand-blush/40 transition-colors text-sm font-medium"
           >
-            Back
+            Change image
           </button>
           <button
+            type="button"
             @click="downloadImage"
-            class="flex-1 py-2 px-4 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors duration-200"
+            class="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-br from-brand-wine to-brand-mauve text-white hover:shadow-lg shadow-md shadow-brand-wine/18 text-sm font-medium border border-brand-wine/30 transition-all"
           >
             Download
           </button>
         </div>
-      </div>
 
-      <div v-if="showShareOptions" class="mt-4 p-4 bg-purple-50 rounded-lg">
-        <h3 class="font-medium text-gray-700 mb-2">Share Your Bouquet</h3>
-        <p class="text-sm text-gray-600 mb-3">
-          Your bouquet expresses: {{ combinedMeaning }}
-        </p>
-        <div class="flex flex-col gap-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Personal Message</label>
-            <textarea
-              v-model="personalMessage"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-              rows="3"
-              placeholder="Add a personal message for your recipient..."
-            ></textarea>
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Your Email</label>
-            <input
-              type="email"
-              v-model="from"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-              placeholder="Enter your email address"
-            />
-          </div>
-
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Recipient's Email</label>
-            <input
-              type="email"
-              v-model="to"
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
-              placeholder="Enter recipient's email address"
-            />
-          </div>
-
-          <div class="flex gap-2">
+        <div
+          v-if="ecardApiUrl"
+          class="mt-6 p-5 rounded-2xl bg-gradient-to-b from-brand-blush/25 to-brand-sky/20 border border-brand-blush/45"
+        >
+          <h3 class="font-display text-lg font-semibold text-brand-wine mb-1">
+            Send love by postscript
+          </h3>
+          <p class="text-sm text-brand-forest/72 mb-4 leading-relaxed">
+            We’ll deliver your blossoms and their meaning—with your note—to someone dear. They can reply gently to your email.
+          </p>
+          <div class="flex flex-col gap-3">
+            <div>
+              <label class="block text-xs font-medium uppercase tracking-wide text-brand-forest/65 mb-1.5"
+                >A few tender words</label
+              >
+              <textarea
+                v-model="personalMessage"
+                class="w-full px-3 py-2.5 border border-brand-blush/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blossom/30 bg-white/92 text-sm text-brand-forest/90 placeholder:text-brand-forest/40"
+                rows="3"
+                placeholder="From my heart…"
+              ></textarea>
+            </div>
+            <div>
+              <label class="block text-xs font-medium uppercase tracking-wide text-brand-forest/65 mb-1.5"
+                >Your email (for replies)</label
+              >
+              <input
+                type="email"
+                v-model="senderEmail"
+                class="w-full px-3 py-2.5 border border-brand-blush/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blossom/30 bg-white/92 text-sm"
+                placeholder="you@example.com"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-medium uppercase tracking-wide text-brand-forest/65 mb-1.5"
+                >Their email</label
+              >
+              <input
+                type="email"
+                v-model="recipientEmail"
+                class="w-full px-3 py-2.5 border border-brand-blush/60 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blossom/30 bg-white/92 text-sm"
+                placeholder="their@example.com"
+              />
+            </div>
             <button
-              @click="shareECard"
-              class="flex-1 py-2 px-4 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors duration-200"
+              type="button"
+              @click="sendEcard"
+              :disabled="isSending"
+              class="w-full py-3 px-4 rounded-xl bg-gradient-to-br from-brand-wine to-brand-mauve text-white hover:shadow-xl transition-all disabled:opacity-55 disabled:cursor-not-allowed text-sm font-semibold shadow-lg shadow-brand-wine/25 border border-brand-wine/35"
             >
-              Share E-Card
+              {{ isSending ? "Sealing envelope…" : "Seal & send e-card" }}
             </button>
           </div>
         </div>
       </div>
 
- 
     </div>
 
-    <div v-else class="text-center py-12 text-gray-500">
-      <p class="mb-4">Your bouquet is empty</p>
-      <p class="text-sm">Select flowers to create a meaningful bouquet</p>
+    <div v-else class="text-center py-14 px-2">
+      <p class="font-display text-xl text-brand-mauve/95 italic mb-2">Your ribbon waits</p>
+      <p class="text-sm text-brand-forest/65 leading-relaxed max-w-[14rem] mx-auto">
+        Choose blossoms from the garden—your private nosegay will gather here.
+      </p>
     </div>
   </div>
 </template>
 
 <script>
 import { ref, computed, watch } from "vue";
+import { PUBLIC_ECARD_API_URL } from "astro:env/client";
 import { generateBouquetImage } from "../services/imageGenerator";
 import { uploadToCloudinary } from "../utils/cloudinary";
-import Mailgun from "mailgun.js";
+import OrnamentRule from "./ui/OrnamentRule.vue";
 
 export default {
   name: "BouquetPreview",
+  components: { OrnamentRule },
   props: {
     selectedFlowers: {
       type: Array,
@@ -181,14 +215,21 @@ export default {
   },
   setup(props) {
     const showMeanings = ref(true);
-    const showShareOptions = ref(false);
     const imageUrl = ref(null);
     const isGenerating = ref(false);
+    const isSending = ref(false);
     const personalMessage = ref("");
-    const to = ref("");
-    const from = ref("");
+    const senderEmail = ref("");
+    const recipientEmail = ref("");
+
+    const ecardApiUrl =
+      typeof PUBLIC_ECARD_API_URL === "string" && PUBLIC_ECARD_API_URL.trim().length > 0
+        ? PUBLIC_ECARD_API_URL.trim()
+        : "";
 
     const notification = ref({ message: "", type: "" });
+    let notificationDismissTimer = /** @type {ReturnType<typeof setTimeout> | null} */ (null);
+    const TOAST_MS = 8800;
 
     const totalFlowers = computed(() => props.selectedFlowers.length);
     const combinedMeaning = computed(() =>
@@ -201,7 +242,9 @@ export default {
       () => props.selectedFlowers,
       () => {
         imageUrl.value = null;
-        showShareOptions.value = false;
+        personalMessage.value = "";
+        senderEmail.value = "";
+        recipientEmail.value = "";
       }
     );
 
@@ -212,32 +255,49 @@ export default {
         isGenerating.value = true;
         const flowerNames = props.selectedFlowers.map((flower) => flower.name);
         const generatedImageUrl = await generateBouquetImage(flowerNames);
-        if (generatedImageUrl) {
-          imageUrl.value = generatedImageUrl;
-          showShareOptions.value = true;
-        } else {
-          throw new Error("Failed to generate image");
-        }
+        imageUrl.value = generatedImageUrl;
       } catch (error) {
         console.error("Error generating image:", error);
-        showNotification("Failed to generate image.", "error");
+        const msg =
+          error instanceof Error ? error.message : "Failed to generate image.";
+        showNotification(msg, "error");
       } finally {
         isGenerating.value = false;
       }
     };
 
     const showNotification = (message, type) => {
+      if (notificationDismissTimer) {
+        clearTimeout(notificationDismissTimer);
+        notificationDismissTimer = null;
+      }
       notification.value = { message, type };
-      setTimeout(() => {
+      notificationDismissTimer = setTimeout(() => {
         notification.value = { message: "", type: "" };
-      }, 3000); // Clear notification after 3 seconds
+        notificationDismissTimer = null;
+      }, TOAST_MS);
     };
 
     const notificationClass = computed(() => {
       return notification.value.type === "success"
-        ? "bg-green-100 text-green-800"
-        : "bg-red-100 text-red-800";
+        ? "bg-brand-sky/25 text-brand-forest border-brand-sky/45"
+        : "bg-brand-blush/30 text-brand-wine border-brand-blush/55";
     });
+
+    /** Split data:image/...;base64,... reliably (MIME params, ";base64" case). */
+    const splitDataUrl = (dataUrl) => {
+      const s = String(dataUrl ?? "").trim();
+      if (!s.startsWith("data:")) return null;
+      const comma = s.indexOf(",");
+      if (comma === -1) return null;
+      const header = s.slice(5, comma);
+      const data = s.slice(comma + 1).replace(/\s/g, "");
+      const hdr = header.toLowerCase();
+      const i = hdr.indexOf(";base64");
+      if (i === -1) return null;
+      const mime = header.slice(0, i).split(";")[0].trim() || "image/png";
+      return mime && data ? { mime, base64: data } : null;
+    };
 
     const downloadImage = () => {
       if (imageUrl.value) {
@@ -252,90 +312,107 @@ export default {
 
     const resetImage = () => {
       imageUrl.value = null;
-      showShareOptions.value = false;
+      personalMessage.value = "";
+      senderEmail.value = "";
+      recipientEmail.value = "";
     };
 
-    const shareECard = async () => {
-      if (!to.value) {
-        showNotification("Please enter a recipient's email address", "error");
+    const sendEcard = async () => {
+      if (!ecardApiUrl) return;
+      if (!recipientEmail.value.trim()) {
+        showNotification("Please enter the recipient’s email.", "error");
         return;
       }
-      if (!from.value) {
-        showNotification("Please enter your email address", "error");
+      if (!senderEmail.value.trim()) {
+        showNotification("Please enter your email (for replies).", "error");
         return;
       }
 
+      isSending.value = true;
       try {
-        // First, upload the image to Cloudinary if it exists
-        let imageDownloadUrl = null;
+        let hostedImageUrl = "";
+        let imageBase64Payload = "";
+        let imageMimeTypePayload = "";
+
         if (imageUrl.value) {
-          try {
-            imageDownloadUrl = await uploadToCloudinary(imageUrl.value);
-          } catch (uploadError) {
-            console.error('Error uploading to Cloudinary:', uploadError);
-            // Continue with e-card sending even if image upload fails
+          const raw = String(imageUrl.value).trim();
+          if (raw.startsWith("https://")) {
+            hostedImageUrl = raw;
+          } else {
+            const parts = splitDataUrl(raw);
+            if (parts) {
+              /* Host on Cloudinary first: Resend inlines CID from remote path more reliably than huge JSON base64. */
+              try {
+                hostedImageUrl = await uploadToCloudinary(raw);
+              } catch (e) {
+                console.warn("Cloudinary hosting for e-card failed, falling back to inline attach:", e);
+                imageMimeTypePayload = parts.mime;
+                imageBase64Payload = parts.base64;
+              }
+            } else if (raw.startsWith("data:")) {
+              showNotification("Could not read bouquet image for email.", "error");
+              isSending.value = false;
+              return;
+            } else {
+              try {
+                hostedImageUrl = await uploadToCloudinary(raw);
+              } catch (e) {
+                console.error("Cloudinary upload failed:", e);
+                showNotification(
+                  "Could not upload the image. Try again or send without image.",
+                  "error"
+                );
+                isSending.value = false;
+                return;
+              }
+            }
           }
         }
 
-        // Call Mailgun directly
-        const mailgun = new Mailgun(FormData);
-        const mg = mailgun.client({
-          username: "api",
-          key: import.meta.env.PUBLIC_MAILGUN_API_KEY
+        const res = await fetch(ecardApiUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            to: recipientEmail.value.trim(),
+            replyTo: senderEmail.value.trim(),
+            personalMessage: personalMessage.value,
+            bouquetMeaning: combinedMeaning.value,
+            ...(hostedImageUrl ? { imageUrl: hostedImageUrl } : {}),
+            ...(imageBase64Payload
+              ? { imageBase64: imageBase64Payload, imageMimeType: imageMimeTypePayload }
+              : {}),
+          }),
         });
 
+        let data;
         try {
-          const result = await mg.messages.create(import.meta.env.PUBLIC_MAILGUN_DOMAIN, {
-            from: `Flora <postmaster@${import.meta.env.PUBLIC_MAILGUN_DOMAIN}>`,
-            to: [to.value],
-            subject: `Your Tussie Mussie from ${from.value}`,
-            text: personalMessage.value || "Sending you this beautiful bouquet to brighten your day!",
-            html: `
-              <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-                <h2 style="color: #4a5568; text-align: center;">You've got flowers!</h2>
-                ${imageDownloadUrl ? `
-                  <div style="text-align: center; margin: 20px 0;">
-                    <img src="${imageDownloadUrl}" alt="Bouquet" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);" />
-                  </div>
-                ` : ''}
-                <div style="background-color: #f7fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
-                  <p style="color: #2d3748; font-size: 16px; line-height: 1.6;">${personalMessage.value || "Sending you this beautiful bouquet to brighten your day!"}</p>
-                </div>
-                <div style="margin-top: 20px; padding: 15px; background-color: #f3f4f6; border-radius: 8px;">
-                  <h3 style="color: #4a5568; margin-bottom: 10px;">Your Bouquet Meaning from the Tussie Mussie Generator</h3>
-                  <p style="color: #2d3748; font-size: 14px; line-height: 1.5;">${combinedMeaning.value}</p>
-                  <p style="color: #2d3748; font-size: 14px; line-height: 1.5; text-italics">Tussie Mussies are a traditional way to express secret thoughts, encoded using the language of flowers, or "floriography".</p>
-                </div>
-                <div style="margin-top: 30px; text-align: center;">
-                  <p style="color: #718096; font-size: 14px;">Created with the Tussie Mussie Generator. 
-                    Create your own bouquAI <a href="https://tussie-mussies.netlify.app">here</a>! If you enjoy this experience, please follow the creator, Beanpot Studio: <a href="https://www.linkedin.com/company/beanpot-studio">on LinkedIn</a>.</p>
-                </div>
-              </div>
-            `
-          });
-
-
-          // Clear the form
-          to.value = '';
-          from.value = '';
-          personalMessage.value = '';
-          showShareOptions.value = false;
-          showNotification("E-card sent successfully!", "success");
-        } catch (error) {
-          console.error("Error sending e-card:", error);
-          showNotification(error.message || "Failed to send e-card. Please try again.", "error");
+          data = await res.json();
+        } catch {
+          showNotification("Unexpected response from e-card service.", "error");
+          return;
         }
-      } catch (error) {
-        console.error("Error sending e-card:", error);
-        showNotification("Failed to send e-card. Please try again.", "error");
+
+        if (!res.ok || !data?.ok) {
+          showNotification(data?.error || "Failed to send e-card.", "error");
+          return;
+        }
+
+        showNotification("E-card sent!", "success");
+        personalMessage.value = "";
+        recipientEmail.value = "";
+      } catch (e) {
+        console.error(e);
+        showNotification("Network error sending e-card.", "error");
+      } finally {
+        isSending.value = false;
       }
     };
 
     return {
       showMeanings,
-      showShareOptions,
       imageUrl,
       isGenerating,
+      isSending,
       totalFlowers,
       combinedMeaning,
       handleGenerateImage,
@@ -343,11 +420,12 @@ export default {
       notificationClass,
       downloadImage,
       resetImage,
-      personalMessage,
-      to,
-      shareECard,
-      from,
       cloudName,
+      ecardApiUrl,
+      personalMessage,
+      senderEmail,
+      recipientEmail,
+      sendEcard,
     };
   },
 };

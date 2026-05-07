@@ -1,23 +1,29 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import FlowerBouquetCreator from "../components/FlowerBouquetCreator.vue";
+import OrnamentRule from "../components/ui/OrnamentRule.astro";
 ---
 
-<Layout title="Flower Language Bouquet Creator">
-  <main class="min-h-screen bg-gradient-to-b from-pink-50 to-purple-50">
-    <div class="container mx-auto px-4 py-8">
-      <header class="text-center mb-12">
-        <h1 class="text-4xl md:text-5xl font-bold text-purple-800 mb-4">
-          Tussie Mussie Generator
-        </h1>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          Create a meaningful tussie mussie to send a secret message by
-          selecting flowers based on their traditional meanings in the language
-          of flowers.
+<Layout title="Tussie Mussie — Flower Language Bouquet Creator">
+  <main class="min-h-screen romance-page-bg">
+    <div class="container mx-auto px-4 py-10 md:py-14">
+      <header class="text-center mb-12 md:mb-16 max-w-2xl mx-auto">
+        <p class="font-display text-brand-mauve/90 italic text-lg md:text-xl mb-3 tracking-wide">
+          A whisper in petals
         </p>
-        <p class="mt-2 text-purple-600">
-          Express sentiments like love, forgiveness, or gratitude through the
-          ancient art of floriography.
+        <h1
+          class="font-display text-4xl md:text-5xl lg:text-6xl font-semibold text-brand-wine mb-5 leading-tight tracking-tight"
+        >
+          Compose your tussie mussie
+        </h1>
+        <OrnamentRule class="mb-6" />
+        <p class="text-brand-forest/75 text-base md:text-lg leading-relaxed font-light">
+          Gather blooms by hand or by intention—each stem carries a Victorian
+          sentiment. Build a bouquet that says what words cannot, in the quiet
+          grammar of floriography.
+        </p>
+        <p class="mt-5 text-brand-mauve/90 text-sm md:text-base italic font-display">
+          Devotion, tenderness, forgiveness—a message only your recipient will fully read.
         </p>
       </header>
 

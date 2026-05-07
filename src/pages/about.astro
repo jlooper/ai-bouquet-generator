@@ -1,23 +1,28 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import OrnamentRule from "../components/ui/OrnamentRule.astro";
 import victoria from "../assets/victoria.avif?url";
 ---
 
-<Layout title="About | Flower Language Bouquet Generator">
-  <main class="min-h-screen bg-gradient-to-b from-pink-50 to-purple-50">
-    <div class="container mx-auto px-4 py-8">
-      <header class="text-center mb-12">
-        <h1 class="text-4xl md:text-5xl font-bold text-purple-800 mb-4">
-          About the Language of Flowers
+<Layout title="About | The language of flowers">
+  <main class="min-h-screen romance-page-bg">
+    <div class="container mx-auto px-4 py-10 md:py-14">
+      <header class="text-center mb-12 max-w-2xl mx-auto">
+        <p class="font-display italic text-brand-mauve/90 text-lg mb-2">A little history</p>
+        <h1
+          class="font-display text-4xl md:text-5xl font-semibold text-brand-wine mb-4 leading-tight"
+        >
+          The language of flowers
         </h1>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          Understanding the historical significance and meaning behind floral
-          communication.
+        <OrnamentRule class="mb-6" />
+        <p class="text-brand-forest/75 text-base md:text-lg leading-relaxed font-light">
+          How a tussie mussie whispered devotion, consolation, or hope—without ever
+          opening the lips.
         </p>
       </header>
 
-      <div class="max-w-4xl p-6 mx-auto bg-white rounded-lg shadow-md">
-        <div class="prose prose-purple max-w-none">
+      <div class="max-w-3xl romance-card rounded-2xl p-8 md:p-10 mx-auto">
+        <div class="prose-flow prose prose-lg max-w-none text-brand-forest/85">
           <p class="p-4">
             Floriography, or the language of flowers, is a means of
             cryptological communication through the use or arrangement of
@@ -34,12 +39,12 @@ import victoria from "../assets/victoria.avif?url";
               width="600"
             />
           </div>
-          <p class="text-sm text-gray-500 p-2 text-center">
+          <p class="text-sm text-brand-forest/55 p-2 text-center italic">
             Queen Victoria popularized tussie mussies. Image from the Royal
             Collection Trust
           </p>
 
-          <h2 class="text-2xl p-8 m-4">Cultural Significance</h2>
+          <h2 class="font-display text-2xl text-brand-wine mt-10 mb-4">Cultural significance</h2>
           <p class="p-4">
             The language of flowers varies across different cultures and time
             periods. In Victorian England, elaborate flower dictionaries were
@@ -47,10 +52,10 @@ import victoria from "../assets/victoria.avif?url";
             messages.
           </p>
 
-          <h2 class="text-2xl p-8 m-4">Data</h2>
+          <h2 class="font-display text-2xl text-brand-wine mt-10 mb-4">Sources & data</h2>
           <p class="p-4">
-            This data was taken from the <a
-              class="text-purple-600 underline"
+            This data was taken from the             <a
+              class="text-brand-mauve underline decoration-brand-blossom/55 underline-offset-2 hover:text-brand-wine"
               href="https://www.almanac.com/flower-meanings-language-flowers#flower-meanings"
             >
               Farmer's Almanac</a
@@ -62,13 +67,13 @@ import victoria from "../assets/victoria.avif?url";
             Langage des Fleurs" by "Madame Charlotte de la Tour", written in
             1809. This book was translated and reinnterpreted several times in
             the Victorian era, triggering a fashion for these meaningful
-            bouquets. <a
-              class="text-purple-600 underline"
+            bouquets.             <a
+              class="text-brand-mauve underline decoration-brand-blossom/55 underline-offset-2 hover:text-brand-wine"
               href="https://en.wikipedia.org/wiki/Language_of_flowers">Source</a
             >
           </p>
 
-          <h2 class="text-2xl p-8 m-4">Creating Meaningful Bouquets</h2>
+          <h2 class="font-display text-2xl text-brand-wine mt-10 mb-4">Weaving meaning</h2>
           <p class="p-4">
             When creating a bouquet using the language of flowers, consider not
             only the meaning of each individual flower but also how they
@@ -77,30 +82,32 @@ import victoria from "../assets/victoria.avif?url";
             like a rose, carnation, or tulip, can change its meaning.
           </p>
 
-          <h2 class="text-2xl p-8 m-4">Modern Interpretations</h2>
+          <h2 class="font-display text-2xl text-brand-wine mt-10 mb-4">Today</h2>
           <p class="p-4">
             Today, while we may not rely on flowers to communicate secret
             messages, understanding the traditional meanings can add depth and
             thoughtfulness to gift-giving and special occasions. Our bouquet
             creator helps you craft arrangements with intention and meaning and
-            send them as e-cards. It's a great gift for a birthday or Mother's
+            download an image or send an e-card (when configured) to share. It's a great gift for a birthday or Mother's
             Day, or really any occasion. You could also use this generator to
             create a meaningful bouquet using real flowers.
           </p>
 
-          <div class="mt-8 p-4 bg-purple-50 rounded-lg">
-            <p class="italic text-center">
-              "The Earth laughs in flowers." — Ralph Waldo Emerson
+          <div
+            class="mt-10 p-6 bg-gradient-to-br from-brand-sky/25 to-brand-blush/35 rounded-2xl border border-brand-blush/50"
+          >
+            <p class="font-display italic text-center text-brand-wine text-lg leading-relaxed">
+              “The Earth laughs in flowers.” — Ralph Waldo Emerson
             </p>
           </div>
         </div>
 
-        <div class="mt-8 text-center">
+        <div class="mt-10 text-center">
           <a
             href="/"
-            class="inline-block p-4 m-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors duration-200"
+            class="inline-block px-8 py-3.5 rounded-xl bg-gradient-to-br from-brand-wine to-brand-mauve text-white hover:shadow-lg transition-all shadow-lg shadow-brand-wine/22 border border-brand-wine/30 font-medium"
           >
-            Create Your Bouquet
+            Return to the garden
           </a>
         </div>
       </div>

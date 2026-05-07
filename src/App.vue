@@ -1,13 +1,13 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-pink-50 to-purple-50 py-8">
+  <div class="min-h-screen romance-page-bg py-8">
     <div class="container mx-auto px-4">
-      <header class="text-center mb-12">
-        <h1 class="text-4xl md:text-5xl font-bold text-purple-800 mb-4">
-          Tussie Mussie Generator
+      <header class="text-center mb-12 max-w-2xl mx-auto">
+        <p class="font-display italic text-brand-mauve/90 text-lg mb-2">A whisper in petals</p>
+        <h1 class="font-display text-4xl md:text-5xl font-semibold text-brand-wine mb-4">
+          Compose your tussie mussie
         </h1>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          Create a meaningful tussie mussie bouquet by selecting flowers based
-          on their traditional meanings in the language of flowers.
+        <p class="text-brand-forest/75 text-lg leading-relaxed font-light">
+          Gather blooms by intent—Victorian floriography, made gentle for today.
         </p>
       </header>
 

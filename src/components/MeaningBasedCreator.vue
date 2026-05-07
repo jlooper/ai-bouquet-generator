@@ -1,21 +1,22 @@
-<!-- filepath: /Users/jenniferlooper/Documents/tussie.mussies/src/components/MeaningBasedCreator.vue -->
 <template>
   <div>
-    <h2 class="text-2xl font-semibold text-purple-800 mb-4">Create by Meaning</h2>
-    <p class="text-gray-600 mb-6">
-      Describe the sentiment you want to express, and we'll create a bouquet that conveys your message.
+    <h2 class="font-display text-2xl md:text-3xl font-semibold text-brand-wine mb-2">
+      Bouquet by feeling
+    </h2>
+    <p class="text-brand-forest/72 mb-6 text-sm leading-relaxed font-light">
+      Name the longing in your breast—love, solace, gratitude—and we’ll gather stems whose old language speaks it for you.
     </p>
 
     <div class="mb-6">
-      <label class="block text-sm font-medium text-gray-700 mb-2">
-        Choose a sentiment (optional)
+      <label class="block text-xs font-semibold uppercase tracking-wide text-brand-forest/65 mb-2">
+        A mood to begin from (optional)
       </label>
       <select
-        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+        class="w-full px-4 py-2.5 border border-brand-blush/65 rounded-xl bg-white/85 text-brand-forest/88 focus:outline-none focus:ring-2 focus:ring-brand-blossom/30"
         v-model="selectedSentiment"
         @change="updateCustomMeaning"
       >
-        <option value="">Select a sentiment</option>
+        <option value="">Choose a tender theme</option>
         <option
           v-for="(keywords, sentiment) in sentimentKeywords"
           :key="sentiment"
@@ -27,25 +28,29 @@
     </div>
 
     <div class="mb-6">
-      <label class="block text-sm font-medium text-gray-700 mb-2">
-        Describe your message
+      <label class="block text-xs font-semibold uppercase tracking-wide text-brand-forest/65 mb-2">
+        Or write your own spell in words
       </label>
       <textarea
-        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500 min-h-[100px]"
-        placeholder="e.g., forgiveness, compassion, and hope"
+        class="w-full px-4 py-3 border border-brand-blush/65 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blossom/30 min-h-[110px] bg-white/85 text-brand-forest/88 placeholder:text-brand-forest/40"
+        placeholder="forgiveness, a second chance, quiet hope…"
         v-model="customMeaning"
         @input="clearSelectedSentiment"
       />
     </div>
 
-    <div v-if="error" class="mb-4 p-3 bg-red-50 text-red-700 rounded-md">
+    <div
+      v-if="error"
+      class="mb-4 p-3 bg-brand-blush/25 text-brand-wine text-sm rounded-xl border border-brand-blush/50"
+    >
       {{ error }}
     </div>
 
     <button
+      type="button"
       @click="findMatchingFlowers"
       :disabled="isLoading || isGenerating"
-      class="w-full py-3 px-4 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors duration-200 disabled:bg-purple-300"
+      class="w-full py-3.5 px-4 rounded-xl bg-gradient-to-br from-brand-wine to-brand-mauve text-white hover:shadow-lg transition-all duration-200 disabled:opacity-45 disabled:cursor-not-allowed font-medium shadow-lg shadow-brand-wine/20 border border-brand-wine/30"
     >
       <span v-if="isGenerating" class="flex items-center justify-center">
         <svg
@@ -68,38 +73,12 @@
             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
           ></path>
         </svg>
-        Creating Your Bouquet...
+        Arranging your nosegay…
       </span>
-      <span v-else>Create Bouquet</span>
+      <span v-else>Arrange my bouquet</span>
     </button>
 
-    <div v-if="matchedFlowers.length > 0 && !isGenerating" class="mt-8">
-      <h3 class="font-medium text-gray-700 mb-3">
-        Selected Flowers for Your Meaning
-      </h3>
-      <div class="bg-purple-50 p-4 rounded-md">
-        <p class="text-sm text-gray-600 mb-4">
-          Based on your desired meaning, we've selected these flowers to create
-          your bouquet:
-        </p>
-        <div class="flex flex-wrap gap-2">
-          <div
-            v-for="flower in matchedFlowers"
-            :key="flower.id"
-            class="flex items-center bg-white px-3 py-2 rounded-md shadow-sm"
-          >
-            <div class="w-6 h-6 rounded-full overflow-hidden mr-2">
-              <img
-                :src="`https://res.cloudinary.com/${cloudName}/image/upload/f_auto,q_auto/flowers/${flower.image}`"
-                :alt="flower.name"
-                class="w-full h-full object-cover"
-              />
-            </div>
-            <span class="text-sm font-medium">{{ flower.name }}</span>
-          </div>
-        </div>
-      </div>
-    </div>
+
   </div>
 </template>
 

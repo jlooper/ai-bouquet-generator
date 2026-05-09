@@ -200,7 +200,7 @@ export default {
       );
     }
 
-    const from = env.FROM_EMAIL || "Flora <onboarding@resend.dev>";
+    const from = env.FROM_EMAIL || "Fleuriste <flora@tussie-mussies.heraistudio.com>";
     const safeMessage = escapeHtml(personalMessage || "Sending you this bouquet to brighten your day!");
     const safeMeaning = escapeHtml(bouquetMeaning);
 

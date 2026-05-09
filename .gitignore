@@ -32,3 +32,6 @@ dist-ssr
 .dev.vars
 workers/*/.dev.vars
 workers/**/key.txt
+
+# Wrangler local dev state (miniflare cache, etc.)
+.wrangler/
